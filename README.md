@@ -43,7 +43,7 @@ git pull後に
 
 3. スクリプトを使用してテーブルを事前に作成
 
-    例として、テーブルを作成しデータを追加します。
+    例として、テーブルを作成しデータを追加するCQLを作成します。
 
         $ mkdir -p /data/cassandra/scripts
         $ vi /data/cassandra/scripts/init.cql
