@@ -1,17 +1,18 @@
-![java 7](https://img.shields.io/badge/java-7-brightgreen.svg) ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![cassandra 2.1.4](https://img.shields.io/badge/cassandra-2.1.4-brightgreen.svg) ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-# docker-java7
+# docker-cassandra
 
 ### Base Docker Image
 
-[debian:wheezy](https://registry.hub.docker.com/_/debian/ "debian:wheezy")
+[tanaka0323:java7](https://bitbucket.org/tanaka0323/docker-java7)
 
 ### 説明
 
-Debian+Java7 Dockerコンテナイメージです。
+Cassandra Dockerコンテナイメージです。
 
-[Dockerとは？](https://docs.docker.com/ "Dockerとは？")  
-[Docker Command Reference](https://docs.docker.com/reference/commandline/cli/ "Docker Command Reference")
+[Cassandraとは？](http://cassandra.apache.org/)  
+[Dockerとは？](https://docs.docker.com/)  
+[Docker Command Reference](https://docs.docker.com/reference/commandline/cli/)
 
 ### 使用方法
 
