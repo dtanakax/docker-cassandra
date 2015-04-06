@@ -22,13 +22,13 @@ git pull後に
 
 イメージ作成
 
-    $ docker build -t <tag>/cassandra .
+    $ docker build -t tanaka0323/cassandra .
 
-### シングルノードでの使用
+### シングルノードでの使用方法
 
 1. cass1というコンテナ名で起動
 
-        $ docker run -d -name cass1 <tag>/cassandra
+        $ docker run -d -name cass1 tanaka0323/cassandra
 
 2. cqlshコンソールへ接続
 
@@ -79,6 +79,9 @@ git pull後に
           1 |        one
 
         (3 rows)
+
+### 3ノードクラスタでの使用方法
+
 
 ### License
 
