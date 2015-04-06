@@ -48,7 +48,7 @@ git pull後に
         $ mkdir -p /data/cassandra/scripts
         $ vi /data/cassandra/scripts/init.cql
 
-    このスクリプトでは、Keyspaceを定義し、テーブルの作成いくつかのデータを追加します。
+    このスクリプトでは、Keyspaceを定義し、テーブルの作成とデータを追加を行います。
 
         CREATE KEYSPACE test_keyspace WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};
         USE test_keyspace;
