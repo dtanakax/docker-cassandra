@@ -85,11 +85,12 @@ git pull後に
 1. 3つのコンテナを起動
 
     下記の--linkオプションではcass2,cass3のコンテナとcass1のコンテナをリンクさせノードへ追加しています。  
+    TOKEN環境変数によりユニークなトークン番号をそれぞれ割り当てます。
     (注:デフォルト9042ポートの場合のみ有効)
 
-        $ docker run -d --name cass1 tanaka0323/cassandra
-        $ docker run -d --name cass2 --link cass1:cass1 tanaka0323/cassandra
-        $ docker run -d --name cass3 --link cass1:cass1 tanaka0323/cassandra
+        $ docker run -d --name cass1 -e TOKEN=1 tanaka0323/cassandra
+        $ docker run -d --name cass2 -e TOKEN=2 --link cass1:cass1 tanaka0323/cassandra
+        $ docker run -d --name cass3 -e TOKEN=3 --link cass1:cass1 tanaka0323/cassandra
 
 2. cass1へログインしnodetoolを使用しステータスを確認
 
