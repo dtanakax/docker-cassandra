@@ -24,7 +24,7 @@ git pull後に
 
     $ docker build -t tanaka0323/cassandra .
 
-### シングルノードでの使用方法
+### シングルノードでの使用例
 
 1. cass1というコンテナ名で起動
 
@@ -80,8 +80,73 @@ git pull後に
 
         (3 rows)
 
-### 3ノードクラスタでの使用方法
+### 3ノードクラスタでの使用例
 
+1. 3つのコンテナを起動
+
+    下記の--linkオプションではcass2,cass3のコンテナとcass1のコンテナをリンクさせノードへ追加しています。  
+    (注:デフォルト9042ポートの場合のみ有効)
+
+        $ docker run -d --name cass1 tanaka0323/cassandra
+        $ docker run -d --name cass2 --link cass1:cass1 tanaka0323/cassandra
+        $ docker run -d --name cass3 --link cass1:cass1 tanaka0323/cassandra
+
+2. cass1へログインしnodetoolを使用しステータスを確認
+
+        $ docker exec -ti cass1 nodetool -h localhost status
+
+        Datacenter: datacenter1
+        =======================
+        Status=Up/Down
+        |/ State=Normal/Leaving/Joining/Moving
+        --  Address       Load       Tokens  Owns (effective)  Host ID                               Rack
+        UN  172.17.0.166  51.29 KB   256     67.0%             8cf43307-02f0-431c-9015-706da6d92adb  rack1
+        UN  172.17.0.167  51.31 KB   256     66.9%             ccd86997-29e0-4c69-9abb-b16974d455bc  rack1
+        UN  172.17.0.168  51.3 KB    256     66.1%             f2136f9c-59ab-480e-b52e-a908ca3169cf  rack1
+
+3. cass1コンテナでいくつかデータを作成
+
+    cqlshを起動します。
+
+        $ docker exec -ti cass1 cqlsh
+
+        Connected to CassCluster at 127.0.0.1:9042.
+        [cqlsh 5.0.1 | Cassandra 2.1.4 | CQL spec 3.2.0 | Native protocol v3]
+        Use HELP for help.
+        cqlsh>
+
+    以下のCQLをペーストします。
+
+        create keyspace demo with replication = {'class':'SimpleStrategy', 'replication_factor':2};
+        use demo;
+        create table names ( id int primary key, name text );
+        insert into names (id,name) values (1, 'gibberish');
+        quit
+
+4. cass2コンテナへ接続し同じデータが作成されているか確認
+
+        $ docker exec -ti cass2 cqlsh
+
+        Connected to CassCluster at 127.0.0.1:9042.
+        [cqlsh 5.0.1 | Cassandra 2.1.4 | CQL spec 3.2.0 | Native protocol v3]
+        Use HELP for help.
+        cqlsh>
+
+    以下のCQLをペーストします。
+
+        select * from demo.names;
+
+         id | name
+        ----+-----------
+          1 | gibberish
+
+        (1 rows)
+
+### Figでの使用方法
+
+[Figとは？](http://www.fig.sh/ "Fidとは？")  
+
+[設定ファイル記述例](https://bitbucket.org/tanaka0323/fig-examples "設定ファイル記述例")
 
 ### License
 

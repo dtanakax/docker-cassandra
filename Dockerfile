@@ -32,14 +32,19 @@ RUN apt-get clean all
 # Environment variables
 ENV CASSANDRA_CONFIG    /etc/cassandra
 ENV CLUSTERNAME         CassCluster
-#ENV SNITCH             PropertyFileSnitch
-#ENV DATACENTER         datacenter
-#ENV RAC                rac1
+ENV TOKEN               256
+ENV SNITCH              SimpleSnitch
+ENV DATACENTER          datacenter1
+ENV RACK                rack1
 
 # Adding the configuration file
 COPY start.sh /start.sh
 COPY supervisord.conf /etc/
 RUN chmod +x /start.sh
+RUN cp -f /etc/cassandra/cassandra.yaml /etc/cassandra/cassandra.yaml.org
+RUN cp -f /etc/cassandra/cassandra-env.sh /etc/cassandra/cassandra-env.sh.org
+RUN cp -f /etc/cassandra/cassandra-rackdc.properties /etc/cassandra/cassandra-rackdc.properties.org
+RUN cp -f /etc/cassandra/cassandra-topology.properties /etc/cassandra/cassandra-topology.properties.org
 
 # Necessary since cassandra is trying to override the system limitations
 # See https://groups.google.com/forum/#!msg/docker-dev/8TM_jLGpRKU/dewIQhcs7oAJ
