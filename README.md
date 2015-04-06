@@ -43,7 +43,7 @@ git pull後に
 
 3. スクリプトを使用してテーブルを事前に作成
 
-    例として、テーブルを作成しいくつかのデータを追加します。
+    例として、テーブルを作成しデータを追加します。
 
         $ mkdir -p /data/cassandra/scripts
         $ vi /data/cassandra/scripts/init.cql
@@ -105,7 +105,7 @@ git pull後に
         UN  172.17.0.167  51.31 KB   256     66.9%             ccd86997-29e0-4c69-9abb-b16974d455bc  rack1
         UN  172.17.0.168  51.3 KB    256     66.1%             f2136f9c-59ab-480e-b52e-a908ca3169cf  rack1
 
-3. cass1コンテナでいくつかデータを作成
+3. cass1コンテナでデータを作成
 
     cqlshを起動します。
 
