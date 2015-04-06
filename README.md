@@ -67,7 +67,7 @@ git pull後に
 
         SELECT * FROM test_table;
 
-    このスクリプトが置かれたホストディレクトリをコンテナへマウントしcqlshを実行し、初期化します。
+    このスクリプトが置かれたホストディレクトリをコンテナへマウント、そしてcqlshを実行し、データベースを初期化します。
 
         $ docker run -d --name cas -v /data/cassandra/scripts:/data -ti tanaka0323/cassandra
         $ docker exec -ti cas bash -c 'cqlsh -f /data/init.cql'
