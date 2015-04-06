@@ -18,15 +18,67 @@ Cassandra Dockerコンテナイメージです。
 
 git pull後に
 
-    $ cd docker-java7
+    $ cd docker-cassandra
 
 イメージ作成
 
-    $ docker build -t <tag>/java7 .
+    $ docker build -t <tag>/cassandra .
 
-起動
+### シングルノードでの使用
 
-    $ docker run --name <name> -ti <tag>/java7 bash
+1. cass1というコンテナ名で起動
+
+        $ docker run -d -name cass1 <tag>/cassandra
+
+2. cqlshコンソールへ接続
+
+        $ docker exec -ti cass1 cqlsh
+
+    下記の様な文字列が表示されます。このコンソール上でCQLを使用しデータ操作を行います。
+
+        $ Connected to CassCluster at 127.0.0.1:9042.
+        $ [cqlsh 5.0.1 | Cassandra 2.1.4 | CQL spec 3.2.0 | Native protocol v3]
+        $ Use HELP for help.
+        $ cqlsh>
+
+3. スクリプトを使用してテーブルを事前に作成
+
+    例として、テーブルを作成しいくつかのデータを追加します。
+
+        $ mkdir -p /data/cassandra/scripts
+        $ vi /data/cassandra/scripts/init.cql
+
+    このスクリプトでは、Keyspaceを定義し、テーブルの作成いくつかのデータを追加します。
+
+        CREATE KEYSPACE test_keyspace WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};
+        USE test_keyspace;
+
+         CREATE TABLE test_table (
+          id text,
+          test_value text,
+          PRIMARY KEY (id)
+         );
+
+        INSERT INTO test_table (id, test_value) VALUES ('1', 'one');
+
+        INSERT INTO test_table (id, test_value) VALUES ('2', 'two');
+
+        INSERT INTO test_table (id, test_value) VALUES ('3', 'three');
+
+        SELECT * FROM test_table;
+
+    このスクリプトが置かれたホストディレクトリをコンテナへマウントしcqlshを実行し、初期化します。
+
+        $ docker run -d --name cas -v /data/cassandra/scripts:/data -ti tanaka0323/cassandra
+        $ docker exec -ti cas bash -c 'cqlsh -f /data/init.cql'
+
+         id | test_value
+        ----+------------
+          3 |      three
+          2 |        two
+          1 |        one
+
+        (3 rows)
 
 ### License
 
