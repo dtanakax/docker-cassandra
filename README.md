@@ -207,9 +207,9 @@ Snitch には、以下のものがあります。
 
 ### Figでの使用方法
 
-[Figとは？](http://www.fig.sh/ "Fidとは？")  
+[Figとは？](http://www.fig.sh/)  
 
-[設定ファイル記述例](https://bitbucket.org/tanaka0323/fig-examples "設定ファイル記述例")
+[設定ファイル記述例](https://bitbucket.org/tanaka0323/fig-examples)
 
 ### License
 
