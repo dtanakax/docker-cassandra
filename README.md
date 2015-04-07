@@ -94,7 +94,7 @@ git pull後に
 
 2. cass1へログインしnodetoolを使用しステータスを確認
 
-        $ docker exec -ti cass1 nodetool -h localhost status
+        $ docker exec -ti cass1 nodetool status
 
         Datacenter: datacenter1
         =======================

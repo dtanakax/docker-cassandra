@@ -41,10 +41,10 @@ ENV RACK                rack1
 COPY start.sh /start.sh
 COPY supervisord.conf /etc/
 RUN chmod +x /start.sh
-RUN cp -f /etc/cassandra/cassandra.yaml /etc/cassandra/cassandra.yaml.org
-RUN cp -f /etc/cassandra/cassandra-env.sh /etc/cassandra/cassandra-env.sh.org
-RUN cp -f /etc/cassandra/cassandra-rackdc.properties /etc/cassandra/cassandra-rackdc.properties.org
-RUN cp -f /etc/cassandra/cassandra-topology.properties /etc/cassandra/cassandra-topology.properties.org
+RUN cp -f $CASSANDRA_CONFIG/cassandra.yaml $CASSANDRA_CONFIG/cassandra.yaml.org
+RUN cp -f $CASSANDRA_CONFIG/cassandra-env.sh $CASSANDRA_CONFIG/cassandra-env.sh.org
+RUN cp -f $CASSANDRA_CONFIG/cassandra-rackdc.properties $CASSANDRA_CONFIG/cassandra-rackdc.properties.org
+RUN cp -f $CASSANDRA_CONFIG/cassandra-topology.properties $CASSANDRA_CONFIG/cassandra-topology.properties.org
 
 # Necessary since cassandra is trying to override the system limitations
 # See https://groups.google.com/forum/#!msg/docker-dev/8TM_jLGpRKU/dewIQhcs7oAJ
@@ -52,8 +52,6 @@ RUN rm -f /etc/security/limits.d/cassandra.conf
 
 # Define mountable directories.
 VOLUME ["/var/lib/cassandra"]
-
-USER root
 
 EXPOSE 7199 7000 7001 9160 9042 22 8012 61621
 
