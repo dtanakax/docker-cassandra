@@ -80,7 +80,7 @@ git pull後に
 
         (3 rows)
 
-### 3ノードクラスタ構成時の使用例
+### 3 ノードクラスタ構成時の使用例
 
 1. 3つのコンテナを起動
 
@@ -142,6 +142,35 @@ git pull後に
           1 | gibberish
 
         (1 rows)
+
+### Snitch (スニッチ) によるノードのネットワーク位置設定
+
+Cassandra の Snitch (スニッチ) は、ノードのネットワークの位置を設定します。
+これを利用して、データのレプリケーションを行うことができます。
+
+    docker run -d --name cass1 -e SNITCH=GossipingPropertyFileSnitch -e DATACENTER=dcname -e RACK=rackname tanaka0323/cassandra
+
+Snitch には、以下のものがあります。
+
+- SimpleSnitch  
+    単一のデータセンター時に使用します。
+
+- PropertyFileSnitch  
+    ラックとデータセンターによりノードの位置を決定します。
+
+- Dynamic snitching  
+    多数のレプリカからの使用履歴を読み取り、履歴に基づいて最高のパフォーマンスを発揮するレプリカを選択すように監視します。
+
+- RackInferringSnitch
+
+- GossipingPropertyFileSnitch  
+    新規ノードを追加する際に、Gossipプロトコルを使用して全てのノードを自動的に更新します。
+
+- EC2Snitch  
+    Amazon EC2環境で、単一サーバーでの運用時に設定します。
+
+- EC2MultiRegionSnitch  
+    Amazon EC2環境で、複数サーバーでの運用時に設定します。
 
 ### Figでの使用方法
 
