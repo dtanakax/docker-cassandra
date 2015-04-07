@@ -12,9 +12,20 @@ ENV DSC21_VERSION 2.1.4-1
 RUN groupadd -r cassandra && useradd -r -g cassandra cassandra
 
 RUN apt-get -y update
-RUN apt-get install -y curl procps \
+RUN apt-get install -y curl procps openssh-server openssl sudo sysstat \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get clean all
+
+# Configure SSH server
+# Create OpsCenter account
+RUN mkdir -p /var/run/sshd && chmod -rx /var/run/sshd \
+    && rm -f /etc/ssh/ssh_host_rsa_key \
+    && ssh-keygen -t rsa -N '' -f /etc/ssh/ssh_host_rsa_key \
+    && sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config \
+    && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
+    && sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config \
+    && useradd -m -G users,root -p $(openssl passwd -1 "opscenter") opscenter \
+    && echo "%root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Add DataStax sources
 RUN echo "deb http://debian.datastax.com/community stable main" | tee -a /etc/apt/sources.list.d/datastax.sources.list

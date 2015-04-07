@@ -174,6 +174,28 @@ Snitch には、以下のものがあります。
 - EC2MultiRegionSnitch  
     Amazon EC2環境で、複数サーバーでの運用時に設定します。  
 
+### OpsCenterを使用したモニタリング
+
+1. 3ノードクラスタを起動
+
+    ここでは[Fig設定サンプル](https://bitbucket.org/tanaka0323/fig-examples)を使用します。
+
+        cd fig-examples/cass_3cluster
+        fig up
+
+2. OpsCenterコンテナを起動
+
+        cd fig-examples/opscenter
+        fig up
+
+3. OpsCenterに接続＆設定
+
+    * ブラウザで[http://ops.dockerhost.io:8888/](http://ops.dockerhost.io:8888/)を開きます。(注:あらかじめhostsファイルでDNS名を指定しておく必要があります。)
+    * "Use Existing Cluster"ボタンを押して起動した3ノードクラスタの内の一つのIPを入力すると、(scripts/ips.shスクリプトでIPアドレスを取得することができます。) 自動的にクラスタ構成を取得し設定が行われます。
+    * "0 of 3 agents connected"メッセージが表示されているポップアップ画面の中の"Fix"をクリックします。
+    * さらにポップアップ画面の中の"Enter Credentials"をクリックしusername <code>opscenter</code>、password <code>opscenter</code>を入力し、"Done"をクリックします。
+    * "All agents connected"メッセージが表示されたら完了です。
+
 ### 環境変数
 
 - <code>CASSANDRA_CONFIG</code>Cassandra設定ファイルディレクトリ
