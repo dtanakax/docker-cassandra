@@ -156,21 +156,32 @@ Snitch には、以下のものがあります。
     単一のデータセンター時に使用します。
 
 - PropertyFileSnitch  
-    ラックとデータセンターによりノードの位置を決定します。
+    ラックとデータセンターによりノードの位置を決定します。  
 
 - Dynamic snitching  
-    多数のレプリカからの使用履歴を読み取り、履歴に基づいて最高のパフォーマンスを発揮するレプリカを選択すように監視します。
+    多数のレプリカからの使用履歴を読み取り、履歴に基づいて最高のパフォーマンスを発揮するレプリカを選択すように監視します。  
 
-- RackInferringSnitch
+- RackInferringSnitch  
+    ラックとデータセンターによりノードの位置を決定します。  
+    [PropertyFileSnitchとの違い](http://docs.datastax.com/en/cassandra/1.2/cassandra/architecture/architectureSnitchRackInf_c.html)
 
 - GossipingPropertyFileSnitch  
-    新規ノードを追加する際に、Gossipプロトコルを使用して全てのノードを自動的に更新します。
+    新規ノードを追加する際に、Gossipプロトコルを使用して全てのノードを自動的に更新します。  
 
 - EC2Snitch  
-    Amazon EC2環境で、単一サーバーでの運用時に設定します。
+    Amazon EC2環境で、単一サーバーでの運用時に設定します。  
 
 - EC2MultiRegionSnitch  
-    Amazon EC2環境で、複数サーバーでの運用時に設定します。
+    Amazon EC2環境で、複数サーバーでの運用時に設定します。  
+
+### 環境変数
+
+- <code>CASSANDRA_CONFIG</code>Cassandra設定ファイルディレクトリ
+- <code>CLUSTERNAME</code>クラスタ名
+- <code>TOKEN</code>トークン番号 多ノードクラスタ構成時ユニークな番号を指定
+- <code>SNITCH</code>スニッチ
+- <code>DATACENTER</code>データセンター名
+- <code>RACK</code>ラック名
 
 ### Figでの使用方法
 
