@@ -191,7 +191,7 @@ Snitch には、以下のものがあります。
 3. OpsCenterに接続＆設定
 
     * ブラウザで[http://ops.dockerhost.io:8888/](http://ops.dockerhost.io:8888/)を開きます。(注:あらかじめhostsファイルでDNS名を指定しておく必要があります。)
-    * "Use Existing Cluster"ボタンを押して起動した3ノードクラスタの内の一つのIPを入力すると、(scripts/ips.shスクリプトでIPアドレスを取得することができます。) 自動的にクラスタ構成を取得し設定が行われます。
+    * "Use Existing Cluster"ボタンを押して起動した3ノードクラスタの内の一つのIPを入力すると、(docker-scripts/ips.shスクリプトでIPアドレスを取得することができます。) 自動的にクラスタ構成を取得し設定が行われます。
     * "0 of 3 agents connected"メッセージが表示されているポップアップ画面の中の"Fix"をクリックします。
     * さらにポップアップ画面の中の"Enter Credentials"をクリックしusername <code>opscenter</code>、password <code>opscenter</code>を入力し、"Done"をクリックします。
     * "All agents connected"メッセージが表示されたら完了です。
