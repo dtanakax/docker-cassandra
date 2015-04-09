@@ -178,15 +178,15 @@ Snitch には、以下のものがあります。
 
 1. 3ノードクラスタを起動
 
-    ここでは[Fig設定サンプル](https://bitbucket.org/tanaka0323/fig-examples)を使用します。
+    ここでは[Docker Compose設定サンプル](https://bitbucket.org/tanaka0323/compose-examples)を使用します。
 
-        cd fig-examples/cass_3cluster
-        fig up
+        cd compose-examples/cass_3cluster
+        docker-compose up
 
 2. OpsCenterコンテナを起動
 
-        cd fig-examples/opscenter
-        fig up
+        cd compose-examples/opscenter
+        docker-compose up
 
 3. OpsCenterに接続＆設定
 
@@ -205,11 +205,11 @@ Snitch には、以下のものがあります。
 - <code>DATACENTER</code>データセンター名
 - <code>RACK</code>ラック名
 
-### Figでの使用方法
+### Docker Composeでの使用方法
 
-[Figとは？](http://www.fig.sh/)  
+[Docker Composeとは](https://docs.docker.com/compose/)  
 
-[設定ファイル記述例](https://bitbucket.org/tanaka0323/fig-examples)
+[設定ファイル記述例](https://bitbucket.org/tanaka0323/compose-examples)
 
 ### License
 
