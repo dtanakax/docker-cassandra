@@ -1,12 +1,15 @@
 ![cassandra 2.1.4](https://img.shields.io/badge/cassandra-2.1.4-brightgreen.svg) ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-# docker-cassandra
+docker-cassandra
+=====================
 
-### Base Docker Image
+Base Docker Image
+-----
 
 [tanaka0323:java7](https://bitbucket.org/tanaka0323/docker-java7)
 
-### 説明
+説明
+-----------------------
 
 Cassandra Dockerコンテナイメージです。
 
@@ -14,7 +17,8 @@ Cassandra Dockerコンテナイメージです。
 [Dockerとは？](https://docs.docker.com/)  
 [Docker Command Reference](https://docs.docker.com/reference/commandline/cli/)
 
-### 使用方法
+使用方法
+-----------------------
 
 git pull後に
 
@@ -24,7 +28,8 @@ git pull後に
 
     $ docker build -t tanaka0323/cassandra .
 
-### シングルノード構成時の使用例
+シングルノード構成時の使用例
+-----------------------
 
 1. cass1というコンテナ名で起動
 
@@ -80,7 +85,8 @@ git pull後に
 
         (3 rows)
 
-### 3 ノードクラスタ構成時の使用例
+3 ノードクラスタ構成時の使用例
+-----------------------
 
 1. 3つのコンテナを起動
 
@@ -143,7 +149,8 @@ git pull後に
 
         (1 rows)
 
-### Snitch (スニッチ) によるノードのネットワーク位置設定
+Snitch (スニッチ) によるノードのネットワーク位置設定
+-----------------------
 
 Cassandra の Snitch (スニッチ) は、ノードのネットワークの位置を設定します。
 これを利用して、データのレプリケーションを行うことができます。
@@ -174,7 +181,8 @@ Snitch には、以下のものがあります。
 - EC2MultiRegionSnitch  
     Amazon EC2環境で、複数サーバーでの運用時に設定します。  
 
-### OpsCenterを使用したモニタリング
+OpsCenterを使用したモニタリング
+-----------------------
 
 1. 3ノードクラスタを起動
 
@@ -193,25 +201,28 @@ Snitch には、以下のものがあります。
     * ブラウザで[http://ops.dockerhost.io:8888/](http://ops.dockerhost.io:8888/)を開きます。(注:あらかじめhostsファイルでDNS名を指定しておく必要があります。)
     * "Use Existing Cluster"ボタンを押して起動した3ノードクラスタの内の一つのIPを入力すると、(docker-scripts/ips.shスクリプトでIPアドレスを取得することができます。) 自動的にクラスタ構成を取得し設定が行われます。
     * "0 of 3 agents connected"メッセージが表示されているポップアップ画面の中の"Fix"をクリックします。
-    * さらにポップアップ画面の中の"Enter Credentials"をクリックしusername <code>opscenter</code>、password <code>opscenter</code>を入力し、"Done"をクリックします。
+    * さらにポップアップ画面の中の"Enter Credentials"をクリックしusername `opscenter`、password `opscenter`を入力し、"Done"をクリックします。
     * "All agents connected"メッセージが表示されたら完了です。
 
-### 環境変数
+環境変数
+-----------------------
 
-- <code>CASSANDRA_CONFIG</code>Cassandra設定ファイルディレクトリ
-- <code>CLUSTERNAME</code>クラスタ名
-- <code>TOKEN</code>トークン番号 多ノードクラスタ構成時ユニークな番号を指定
-- <code>SNITCH</code>スニッチ
-- <code>DATACENTER</code>データセンター名
-- <code>RACK</code>ラック名
+- `CASSANDRA_CONFIG`Cassandra設定ファイルディレクトリ
+- `CLUSTERNAME`クラスタ名
+- `TOKEN`トークン番号 多ノードクラスタ構成時ユニークな番号を指定
+- `SNITCH`スニッチ
+- `DATACENTER`データセンター名
+- `RACK`ラック名
 
-### Docker Composeでの使用方法
+Docker Composeでの使用方法
+-----------------------
 
 [Docker Composeとは](https://docs.docker.com/compose/)  
 
 [設定ファイル記述例](https://bitbucket.org/tanaka0323/compose-examples)
 
-### License
+License
+-----------------------
 
 The MIT License
 Copyright (c) 2015 Daisuke Tanaka
