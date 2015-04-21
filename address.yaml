@@ -1,0 +1,71 @@
+# The DataStax Enterprise node or nodes responsible for storing OpsCenter data. By default this will be the local node,
+# but may be configured to store data on a separate cluster. 
+# The hosts option accepts an array of strings specifying the IP addresses of the node or nodes.
+# For example, ["1.2.3.4"] or ["1.2.3.4", "1.2.3.5"]
+#hosts:
+
+# Determines whether to allow a restore operation from S3 to continue after any file fails to download.
+# Setting the value to true allows the restore operation to continue. The default setting is false.
+#restore_on_transfer_failure:
+
+# Sets the maximum number of files to queue for uploading to a remote backup destination.
+# Increasing this number impacts memory. The default setting is 100000.
+#max-number-queued-files:
+
+# Reachable IP address of the opscenterd machine. The connection made will be on stomp_port.
+#stomp_interface:
+
+# The stomp_port used by opscenterd. The default setting is 61620.
+#stomp_port:
+
+# The IP used to identify the node. If broadcast_address is set in cassandra.yaml, this should be the same as that; otherwise, it is typically the same as listen_address in cassandra.yaml.
+# A good check is to confirm that this address is the same as the address that nodetool ring outputs.
+#local_interface:
+
+# The IP that the agent HTTP server listens on. In a multiple region deployment, this is typically a private IP.
+#agent_rpc_interface:
+
+# The IP that the central OpsCenter process uses to connect to the DataStax agent.
+#agent_rpc_broadcast_address:
+
+# Whether or not to use SSL communication between the agent and opscenterd. Affects both the STOMP connection and agent HTTP server.
+# Corresponds to [agents].use_ssl in opscenterd.conf. Setting this option to true turns on SSL connections.
+# The default setting is 0.
+#use_ssl: 0
+
+# The agent will attempt to auto-detect the location of the cassandra.yaml file via JMX, but if it cannot this needs to be set to the full path of cassandra.yaml.
+# By default /etc/cassandra/cassandra.yaml on package installs or <install_location>/conf/cassandra.yaml on tarball installs.
+#cassandra_conf:
+
+# The location where Cassandra is installed for tarball installs if OpsCenter is unable to auto-detect the install location.
+#cassandra_install_location:
+
+# The location of Cassandra's system.log file.
+# This is only used for the diagnostics tarball, and should only be set if system.log is in a non-standard location.
+#cassandra_log_location:
+
+# Whether or not to collect and store metrics for the local node.
+# Setting this option to false turns off metrics collection. The default setting is true.
+#metrics_enabled: true
+
+# Port used to connect to Cassandra. The default setting is 9042.
+# This information will be sent by opscenterd for convenience, but can be configured locally as needed.
+#cassandra_port: 9042
+
+# Host used to connect to local JMX server. The default setting is localhost.
+# This information will be sent by opscenterd for convenience, but can be configured locally as needed.
+#jmx_host:
+
+# Port used to connect to local JMX server. The default setting is 7199.
+# This information will be sent by opscenterd for convenience, but can be configured locally as needed.
+#jmx_port:
+
+# Port the local HTTP server will bind to. The default setting is 61621.
+# This option needs to be identical across all agents, and set explicitly in opscenterd.conf if changed.
+#api_port:
+
+# Sets whether the DataStax Agent will be run using sudo.
+# Setting this option to false means the agent will not use sudo, and the agent user will not run using elevated privileges.
+# Setting this option to true means the agent will run using sudo, and elevated privileges.
+# The default setting is true.
+#runs_sudo:

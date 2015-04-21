@@ -184,6 +184,23 @@ Snitch には、以下のものがあります。
 OpsCenterを使用したモニタリング
 -----------------------
 
+1. OpsCenterコンテナを起動
+
+    $ docker run -d --name ops -p 8888:8888 -ti tanaka0323/opscenter
+
+2. 1で起動したコンテナをリンクし、`RUN_AGENT`環境変数を指定し起動  
+エイリアス名は`opscenter`として下さい。
+
+    $ docker run -d --name cass1 --link ops:opscenter -e RUN_AGENT=true tanaka0323/cassandra
+
+Docker Composeを使用したOpsCenterモニタリング
+-----------------------
+
+1. OpsCenterコンテナを起動
+
+        cd compose-examples/opscenter
+        docker-compose up
+
 1. 3ノードクラスタを起動
 
     ここでは[Docker Compose設定サンプル](https://bitbucket.org/tanaka0323/compose-examples)を使用します。
@@ -191,28 +208,28 @@ OpsCenterを使用したモニタリング
         cd compose-examples/cass_3cluster
         docker-compose up
 
-2. OpsCenterコンテナを起動
-
-        cd compose-examples/opscenter
-        docker-compose up
-
 3. OpsCenterに接続＆設定
 
     * ブラウザで[http://ops.dockerhost.io:8888/](http://ops.dockerhost.io:8888/)を開きます。(注:あらかじめhostsファイルでDNS名を指定しておく必要があります。)
     * "Use Existing Cluster"ボタンを押して起動した3ノードクラスタの内の一つのIPを入力すると、(docker-scripts/ips.shスクリプトでIPアドレスを取得することができます。) 自動的にクラスタ構成を取得し設定が行われます。
-    * "0 of 3 agents connected"メッセージが表示されているポップアップ画面の中の"Fix"をクリックします。
-    * さらにポップアップ画面の中の"Enter Credentials"をクリックしusername `opscenter`、password `opscenter`を入力し、"Done"をクリックします。
-    * "All agents connected"メッセージが表示されたら完了です。
+
+利用可能なボリューム
+---------------------
+
+以下のボリュームが利用可能
+
+    /etc/cassandra         # Cassandra設定ディレクトリ
+    /etc/datastax-agent    # Datastax-agent設定ディレクトリ
 
 環境変数
 -----------------------
 
-- `CASSANDRA_CONFIG`Cassandra設定ファイルディレクトリ
-- `CLUSTERNAME`クラスタ名
-- `TOKEN`トークン番号 多ノードクラスタ構成時ユニークな番号を指定
-- `SNITCH`スニッチ
-- `DATACENTER`データセンター名
-- `RACK`ラック名
+- `CLUSTERNAME` クラスタ名
+- `TOKEN` トークン番号 多ノードクラスタ構成時ユニークな番号を指定
+- `SNITCH` スニッチ
+- `DATACENTER` データセンター名
+- `RACK` ラック名
+- `RUN_AGENT` DataStacksAgent起動(OpsCenter用) true or false デフォルト:false
 
 Docker Composeでの使用方法
 -----------------------

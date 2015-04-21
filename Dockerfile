@@ -7,25 +7,14 @@ MAINTAINER Daisuke Tanaka, tanaka@infocorpus.com
 ENV DEBIAN_FRONTEND noninteractive
 ENV CASSANDRA_VERSION 2.1.4
 ENV DSC21_VERSION 2.1.4-1
-
-# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r cassandra && useradd -r -g cassandra cassandra
+ENV AGENT_VERSION 5.1.1
 
 RUN apt-get -y update
-RUN apt-get install -y curl procps openssh-server openssl sudo sysstat \
+RUN apt-get install -y curl procps sudo sysstat \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get clean all
 
-# Configure SSH server
-# Create OpsCenter account
-RUN mkdir -p /var/run/sshd && chmod -rx /var/run/sshd \
-    && rm -f /etc/ssh/ssh_host_rsa_key \
-    && ssh-keygen -t rsa -N '' -f /etc/ssh/ssh_host_rsa_key \
-    && sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config \
-    && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
-    && sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config \
-    && useradd -m -G users,root -p $(openssl passwd -1 "opscenter") opscenter \
-    && echo "%root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN groupadd -r cassandra && useradd -r -g cassandra cassandra
 
 # Add DataStax sources
 RUN echo "deb http://debian.datastax.com/community stable main" | tee -a /etc/apt/sources.list.d/datastax.sources.list
@@ -35,22 +24,27 @@ RUN curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
 RUN ln -s -f /bin/true /usr/bin/chfn
 
 RUN apt-get -y update \
-    && apt-get install -y cassandra=$CASSANDRA_VERSION dsc21=$DSC21_VERSION supervisor \
+    && apt-get install -y cassandra=$CASSANDRA_VERSION dsc21=$DSC21_VERSION datastax-agent=$AGENT_VERSION supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get clean all
 
 # Environment variables
 ENV CASSANDRA_CONFIG    /etc/cassandra
+ENV AGENT_CONFIG        /etc/datastax-agent
+
 ENV CLUSTERNAME         CassCluster
 ENV TOKEN               256
 ENV SNITCH              SimpleSnitch
 ENV DATACENTER          datacenter1
 ENV RACK                rack1
+ENV RUN_AGENT           False
 
 # Adding the configuration file
 COPY start.sh /start.sh
-COPY supervisord.conf /etc/
+COPY sv-min.conf /etc/
+COPY sv-full.conf /etc/
+COPY address.yaml $AGENT_CONFIG/address.yaml.org
 RUN chmod +x /start.sh
 RUN cp -f $CASSANDRA_CONFIG/cassandra.yaml $CASSANDRA_CONFIG/cassandra.yaml.org
 RUN cp -f $CASSANDRA_CONFIG/cassandra-env.sh $CASSANDRA_CONFIG/cassandra-env.sh.org
@@ -62,7 +56,7 @@ RUN cp -f $CASSANDRA_CONFIG/cassandra-topology.properties $CASSANDRA_CONFIG/cass
 RUN rm -f /etc/security/limits.d/cassandra.conf
 
 # Define mountable directories.
-VOLUME ["/var/lib/cassandra"]
+VOLUME ["/etc/cassandra", "/etc/datastax-agent"]
 
 EXPOSE 7199 7000 7001 9160 9042 22 8012 61621
 

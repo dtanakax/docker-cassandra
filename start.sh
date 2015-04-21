@@ -2,6 +2,7 @@
 set -e
 
 chown -R cassandra:cassandra /var/lib/cassandra
+chown -R cassandra:cassandra /var/log/cassandra
 
 # Accept listen_address
 # Accept seeds via docker run -e SEEDS=seed1,seed2,...
@@ -16,6 +17,21 @@ if [[ `env | grep _PORT_9042_TCP_ADDR` ]]; then
 fi
 
 echo "=> Configuring Cassandra to listen at $IP with seeds $SEEDS"
+
+# Datastax agent execute 
+if [ "$RUN_AGENT" = "True" ]; then
+  # Recreate datastax agent config
+  rm -f $AGENT_CONFIG/address.yaml
+  cp -f $AGENT_CONFIG/address.yaml.org $AGENT_CONFIG/address.yaml
+
+  # Setup datastax agent
+  sed -i -e "s/#stomp_interface:/stomp_interface: \"$OPSCENTER_PORT_61620_TCP_ADDR\"/
+             s/#local_interface:/local_interface: $IP/" $AGENT_CONFIG/address.yaml
+
+  cp -f /etc/sv-full.conf /etc/supervisord.conf
+else
+  cp -f /etc/sv-min.conf /etc/supervisord.conf
+fi
 
 # Recreate cassandra config files
 rm -f $CASSANDRA_CONFIG/cassandra.yaml $CASSANDRA_CONFIG/cassandra-env.sh $CASSANDRA_CONFIG/cassandra-rackdc.properties $CASSANDRA_CONFIG/cassandra-topology.properties
