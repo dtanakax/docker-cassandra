@@ -58,7 +58,8 @@ RUN rm -f /etc/security/limits.d/cassandra.conf
 # Define mountable directories.
 VOLUME ["/etc/cassandra", "/etc/datastax-agent"]
 
+ENTRYPOINT ["./start.sh"]
+
 EXPOSE 7199 7000 7001 9160 9042 22 8012 61621
 
-# Executing sh
-ENTRYPOINT ./start.sh
+CMD ["supervisord", "-n"]
