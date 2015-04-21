@@ -11,7 +11,7 @@ Base Docker Image
 説明
 -----------------------
 
-Cassandra Dockerコンテナイメージです。
+Cassandra Dockerコンテナ作成設定
 
 [Cassandraとは？](http://cassandra.apache.org/)  
 [Dockerとは？](https://docs.docker.com/)  
