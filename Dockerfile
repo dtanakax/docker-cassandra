@@ -56,7 +56,7 @@ RUN cp -f $CASSANDRA_CONFIG/cassandra-topology.properties $CASSANDRA_CONFIG/cass
 RUN rm -f /etc/security/limits.d/cassandra.conf
 
 # Define mountable directories.
-VOLUME ["/etc/cassandra", "/etc/datastax-agent"]
+VOLUME ["/var/lib/cassandra", "/etc/cassandra", "/etc/datastax-agent"]
 
 ENTRYPOINT ["./start.sh"]
 

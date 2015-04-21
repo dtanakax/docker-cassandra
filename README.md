@@ -218,6 +218,7 @@ Docker Composeを使用したOpsCenterモニタリング
 
 以下のボリュームが利用可能
 
+    /var/lib/cassandra     # データ領域
     /etc/cassandra         # Cassandra設定ディレクトリ
     /etc/datastax-agent    # Datastax-agent設定ディレクトリ
 
