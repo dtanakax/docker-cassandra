@@ -39,6 +39,8 @@ ENV SNITCH              SimpleSnitch
 ENV DATACENTER          datacenter1
 ENV RACK                rack1
 ENV RUN_AGENT           False
+ENV MAX_HEAP_SIZE       1G
+ENV HEAP_NEWSIZE        200M
 
 # Adding the configuration file
 COPY start.sh /start.sh

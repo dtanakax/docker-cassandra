@@ -41,9 +41,6 @@ if [ "$1" = "supervisord" ]; then
   cp -f $CASSANDRA_CONFIG/cassandra-rackdc.properties.org $CASSANDRA_CONFIG/cassandra-rackdc.properties
   cp -f $CASSANDRA_CONFIG/cassandra-topology.properties.org $CASSANDRA_CONFIG/cassandra-topology.properties
 
-  # Disable virtual nodes
-  sed -i -e "s/num_tokens/\#num_tokens/" $CASSANDRA_CONFIG/cassandra.yaml
-
   # Setup cluster name
   if [ -z "$CLUSTERNAME" ]; then
       echo "=> No cluster name specified, preserving default one"
@@ -59,14 +56,15 @@ if [ "$1" = "supervisord" ]; then
              s/^commitlog_segment_size_in_mb.*/commitlog_segment_size_in_mb: 64/
              s/- seeds: \"127.0.0.1\"/- seeds: \"$SEEDS\"/" $CASSANDRA_CONFIG/cassandra.yaml
 
+
+  sed -i -e "s/#MAX_HEAP_SIZE=.*/MAX_HEAP_SIZE=\"$MAX_HEAP_SIZE\"/
+             s/#HEAP_NEWSIZE=.*/HEAP_NEWSIZE=\"$HEAP_NEWSIZE\"/" $CASSANDRA_CONFIG/cassandra-env.sh
   # With virtual nodes disabled, we need to manually specify the token
   if [ -z "$TOKEN" ]; then
       echo "=> Missing initial token for Cassandra"
       exit -1
   fi
   echo "JVM_OPTS=\"\$JVM_OPTS -Dcassandra.initial_token=$TOKEN\"" >> $CASSANDRA_CONFIG/cassandra-env.sh
-
-  # Most likely not needed
   echo "JVM_OPTS=\"\$JVM_OPTS -Djava.rmi.server.hostname=$IP\"" >> $CASSANDRA_CONFIG/cassandra-env.sh
 
   sed -i -e "s/endpoint_snitch: SimpleSnitch/endpoint_snitch: $SNITCH/" $CASSANDRA_CONFIG/cassandra.yaml

@@ -231,6 +231,8 @@ Docker Composeを使用したOpsCenterモニタリング
 - `DATACENTER` データセンター名
 - `RACK` ラック名
 - `RUN_AGENT` DataStacksAgent起動(OpsCenter用) true or false デフォルト:false
+- `MAX_HEAP_SIZE` JVM最大ヒープサイズ デフォルト:1G
+- `HEAP_NEWSIZE` JVMヒープサイズ デフォルト:200M
 
 Docker Composeでの使用方法
 -----------------------
