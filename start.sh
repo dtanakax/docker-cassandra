@@ -20,7 +20,7 @@ if [ "$1" = "supervisord" ]; then
   echo "=> Configuring Cassandra to listen at $IP with seeds $SEEDS"
 
   # Datastax agent execute 
-  if [ "$RUN_AGENT" = "True" ]; then
+  if [ "$RUN_AGENT" = "true" ]; then
     # Recreate datastax agent config
     rm -f $AGENT_CONFIG/address.yaml
     cp -f $AGENT_CONFIG/address.yaml.org $AGENT_CONFIG/address.yaml

@@ -38,7 +38,7 @@ ENV TOKEN               256
 ENV SNITCH              SimpleSnitch
 ENV DATACENTER          datacenter1
 ENV RACK                rack1
-ENV RUN_AGENT           False
+ENV RUN_AGENT           false
 ENV MAX_HEAP_SIZE       1G
 ENV HEAP_NEWSIZE        200M
 
