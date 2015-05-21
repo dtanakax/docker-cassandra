@@ -7,12 +7,12 @@ MAINTAINER Daisuke Tanaka, dtanakax@gmail.com
 ENV DEBIAN_FRONTEND noninteractive
 ENV CASSANDRA_VERSION 2.1.5
 ENV DSC21_VERSION 2.1.5-1
-ENV AGENT_VERSION 5.1.1
+ENV AGENT_VERSION 5.1.2
 
-RUN apt-get -y update
-RUN apt-get install -y curl procps sudo sysstat \
-    && rm -rf /var/lib/apt/lists/*
-RUN apt-get clean all
+RUN apt-get -y update && \
+    apt-get install -y curl procps sudo sysstat && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean all
 
 RUN groupadd -r cassandra && useradd -r -g cassandra cassandra
 
@@ -23,11 +23,10 @@ RUN curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
 # Workaround for https://github.com/docker/docker/issues/6345
 RUN ln -s -f /bin/true /usr/bin/chfn
 
-RUN apt-get -y update \
-    && apt-get install -y cassandra=$CASSANDRA_VERSION dsc21=$DSC21_VERSION datastax-agent=$AGENT_VERSION supervisor \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get clean all
+RUN apt-get -y update && \
+    apt-get install -y cassandra=$CASSANDRA_VERSION dsc21=$DSC21_VERSION datastax-agent=$AGENT_VERSION supervisor && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean all
 
 # Environment variables
 ENV CASSANDRA_CONFIG    /etc/cassandra
