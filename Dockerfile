@@ -7,7 +7,7 @@ MAINTAINER Daisuke Tanaka, dtanakax@gmail.com
 ENV DEBIAN_FRONTEND noninteractive
 ENV CASSANDRA_VERSION 2.1.6
 ENV DSC21_VERSION 2.1.6-1
-ENV AGENT_VERSION 5.1.2
+ENV AGENT_VERSION 5.1.3
 
 RUN apt-get -y update && \
     apt-get install -y curl procps sudo sysstat && \
