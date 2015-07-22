@@ -5,9 +5,9 @@ FROM dtanakax/java7
 MAINTAINER Daisuke Tanaka, dtanakax@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV CASSANDRA_VERSION 2.1.8
-ENV DSC21_VERSION 2.1.8-1
-ENV AGENT_VERSION 5.1.3
+ENV CASSANDRA_VERSION 2.2.0
+ENV DSC21_VERSION 2.2.0-1
+ENV AGENT_VERSION 5.2.0
 
 RUN apt-get -y update && \
     apt-get install -y curl procps sudo sysstat && \
