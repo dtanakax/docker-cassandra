@@ -6,7 +6,7 @@ MAINTAINER Daisuke Tanaka, dtanakax@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV CASSANDRA_VERSION 2.2.0
-ENV DSC21_VERSION 2.2.0-1
+ENV DSC22_VERSION 2.2.0-1
 ENV AGENT_VERSION 5.2.0
 
 RUN apt-get -y update && \
@@ -24,7 +24,7 @@ RUN curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
 RUN ln -s -f /bin/true /usr/bin/chfn
 
 RUN apt-get -y update && \
-    apt-get install -y cassandra=$CASSANDRA_VERSION dsc21=$DSC21_VERSION datastax-agent=$AGENT_VERSION supervisor && \
+    apt-get install -y cassandra=$CASSANDRA_VERSION dsc22=$DSC22_VERSION datastax-agent=$AGENT_VERSION supervisor && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean all
 
